@@ -21,5 +21,3 @@ def index():
 def names():
     if request.method == 'GET':
         return render_template("names.html")
-    else:
-        await docbot.sharepatientdata()
