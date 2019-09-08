@@ -8,12 +8,27 @@ import sys
 import pykeybasebot.types.chat1 as chat1
 from pykeybasebot import Bot
 
-logging.basicConfig(level=logging.DEBUG)
+class DocBot:
+    def __init__(self, botname, paperkey):
+        self.botname =botname
+        self.paperkey =paperkey
+        self._bot = None
+    logging.basicConfig(level=logging.DEBUG)
 
-if "win32" in sys.platform:
-    # Windows specific event-loop policy
-    asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
+    if "win32" in sys.platform:
+        # Windows specific event-loop policy
+        asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
+ 
+    listen_options = {
+        "filter-channels": [
+            {"name": "dhrumilp15,someoneelse"}
+        ]
+    }
 
+    bot = Bot(
+        username = "dhrumilp15", paperkey = "holiday maid indoor dial sword leisure limit spend connect cheese round slot hat", handler = Handler
+    )
+    asyncio.run(bot.start(listen_options))
 
 class Handler:
     async def __call__(self, bot, event):
@@ -31,14 +46,3 @@ class Handler:
             os.system("keybase chat download {channel} {attachmentId} -o {filename}".format(channel = channel.name, attachmentId = int(event.msg.id), filename = filename))
             os.system("keybase fs mv {filename} /keybase/private/{doc},{patientName}".format(filename = filename, doc = bot.username, patientName = patient))
             os.system("keybase fs rm -f {filename}".format(filename = filename))
-
-listen_options = {
-    "filter-channels": [
-        {"name": "dhrumilp15,sigilwen"}
-    ]
-}
-bot = Bot(
-    username="dhrumilp15", paperkey="holiday maid indoor dial sword leisure limit spend connect cheese round slot hat", handler = Handler
-)
-
-asyncio.run(bot.start(listen_options))

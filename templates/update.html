@@ -1,14 +1,20 @@
 {% extends "layout.html" %}
 #Jinja v2. 
 {% block title %}
-    Buy
+    Update
 {% endblock %}
 
 {% block main %}
-    <form action="/update" method="post">
+    <form action="/update" method="post" enctype="multipart/form-data">
         <div class="form-group">
            <head>Upload patient files here.</head>
-            <input autocomplete="off" autofocus class="form-control" name="stock" placeholder="E.g - NFLX" type="file"/>
+           
+            <input autocomplete="off" autofocus class="form-control" name="file" placeholder="MRI.pdf" type="file"/>
+            <h1>Enter Patient's Username</h1>
+            <input autocomplete="off" autofocus class="form-control" name="patient" placeholder="E.g - PatientBob" type="text"/>
+            <h1>Enter Doctor's Username</h1>
+            <input autocomplete="off" autofocus class="form-control" name="doctor" placeholder="E.g - DoctorJoo" type="text"/>
+
         </div>
         <button class="btn btn-primary" type="submit">Submit</button>
     </form>
