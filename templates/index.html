@@ -1,16 +1,21 @@
 {% extends "layout.html" %}
 #Jinja v2. 
-{% block title %}
-    Buy
-{% endblock %}
+{% block title %} Index {% endblock %}
 
 {% block main %}
     <form action="/" method="post">
-        <div class="form-group">
-            <head>JOOOCE</head>
-            <input autocomplete="off" autofocus class="form-control" name="stock" placeholder="E.g - NFLX" type="file"/>
-            <input autocomplete="off" autofocus class="form-control" name="shares" placeholder="E.g - 1" type="number"/>
+        <div>
+            <head>Welcome to MediSafe</head>
+            <h2>Securely access and update your patient's medical records through a decentralized platform.</h2>
         </div>
-        <button class="btn btn-primary" type="submit">Buy</button>
+        <div>
+            <h4>Accessing Patient History</h4>
+            <h2>To view your patient's medical History, click <a href="/history">here</a>.  </h2>
+        </div>
+        <div>
+            <h4>Updating Patient Records</h4>
+            <h2>To Update your patient's medical History, click <a href="/update">here</a>.  </h2>
+        </div>
+        
     </form>
 {% endblock %}

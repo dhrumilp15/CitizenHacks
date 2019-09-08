@@ -1,16 +1,15 @@
 {% extends "layout.html" %}
 #Jinja v2. 
 {% block title %}
-    Buy
+    History
 {% endblock %}
 
 {% block main %}
     <form action="/history" method="post">
         <div class="form-group">
-            <head>DELETE UR HISTORY B4 DAD SEES IT</head>
-            <input autocomplete="off" autofocus class="form-control" name="stock" placeholder="E.g - NFLX" type="file"/>
-            <input autocomplete="off" autofocus class="form-control" name="shares" placeholder="E.g - 1" type="number"/>
+            <head>View Patient Medical History:</head>
         </div>
-        <button class="btn btn-primary" type="submit">Buy</button>
+        <div><iframe src="https://www.ahrq.gov/ncepcr/tools/pf-handbook/mod8-app-b-monica-latte.html" frameboarder= "0"> </iframe></div>
+       
     </form>
 {% endblock %}
