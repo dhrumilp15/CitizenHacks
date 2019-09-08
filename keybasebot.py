@@ -1,4 +1,4 @@
-from flask import redirect, render_template, request, session
+# from flask import redirect, render_template, request, session
 import pykeybasebot
 import asyncio
 import functools
@@ -7,10 +7,9 @@ import os
 import sys
 import pykeybasebot.types.chat1 as chat1
 
-logging.basicConfig(level = logging.ERROR)
+logging.basicConfig(level = logging.DEBUG)
 
-if 'win32' in sys.platform:
-    asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
+asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
 
 def force_async(fn):
     from concurrent.futures import ThreadPoolExecutor
@@ -25,11 +24,11 @@ def force_async(fn):
 
     return wrapper
 
-class Handler:
-    async def __call__(self, bot, event):
-        if event.msg.content.type_name != chat1.MessageTypeStrings.TEXT.value:
-            return
-        await docbot.sharepatientdata(event.msg.content.text.body)
+# class Handler:
+#     async def __call__(self, bot, event):
+#         if event.msg.content.type_name != chat1.MessageTypeStrings.TEXT.value:
+#             return
+#         await docbot.sharepatientdata(event.msg.content.text.body)
         
 class DocBot:
     def __init__(self, botname, paperkey, channels):
@@ -44,13 +43,13 @@ class DocBot:
         self._bot = pykeybasebot.Bot(
             username=self.botname, paperkey=self.paperkey, handler=self.command_handler
         )
-        bot_channels = []
-        for channel in self.channels:
-            team, topic = channel.split("#")
-            bot_channels.append(
-                {"name": team, "topic_name": topic, "members_type": "team"}
-            )
-        listen_options = {"filter-channels": bot_channels}
+        # bot_channels = []
+        # for channel in self.channels:
+        #     team, topic = channel.split("#")
+        #     bot_channels.append(
+        #         {"name": team, "topic_name": topic, "members_type": "team"}
+        #     )
+        listen_options = {"filter-channels": "dhrumilp15,sigilwen"}
         asyncio.run(self._bot.start(listen_options))
 
     def add_command(self, trigger_func, command_func):
@@ -60,7 +59,7 @@ class DocBot:
         )
 
     def reply(self, event, message):
-        channel = event.msg.channel.replyable_dict()  # format the channel for sending
+        channel = event.msg.channel  # format the channel for sending
         # make a new loop to run the async bot.chat.send method in what is currently
         # a synchronous context
         loop = asyncio.new_event_loop()
@@ -84,18 +83,22 @@ class DocBot:
 
 docbot = DocBot(
     botname = "dhrumilp15",
-    paperkey = "holiday maid indoor dial sword leisure limit spend connect cheese round slot hat",
-    channels = ["dhrumilp15,dhrumilp15"]
+    paperkey = "seek ethics twelve federal garment hockey vapor local vacuum bleak employ egg soap",
+    channels = ["dhrumilp15,sigilwen"]
 )
 def patientGreeting(bot, event):
     if event.msg.content.type_name != chat1.MessageTypeStrings.TEXT.value:
         return False
+    return event.msg.content.text.body == "I'm at the doctor's"
 
-def patientfiles(bot, event):
+def askHistory(bot, event):
     if event.msg.content.type_name != chat1.MessageTypeStrings.TEXT.value:
         return False
-    patient = {'username': ''}
-    patient['username'] = event.msg.sender.username
-    return patient
+    bot.reply(event, "Could you please send your medical history in the chat.")
+
+docbot.add_command(patientGreeting, askHistory)
+
+def gethistory(bot, event):
+    if event.msg.content.type_name
 
 docbot.run()
