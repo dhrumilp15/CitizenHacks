@@ -5,12 +5,11 @@
 {% endblock %}
 
 {% block main %}
-    <form action="/" method="post">
+    <form action="/update" method="post">
         <div class="form-group">
-            <head>JOOOCE</head>
+           <head>Upload patient files here.</head>
             <input autocomplete="off" autofocus class="form-control" name="stock" placeholder="E.g - NFLX" type="file"/>
-            <input autocomplete="off" autofocus class="form-control" name="shares" placeholder="E.g - 1" type="number"/>
         </div>
-        <button class="btn btn-primary" type="submit">Buy</button>
+        <button class="btn btn-primary" type="submit">Submit</button>
     </form>
 {% endblock %}
