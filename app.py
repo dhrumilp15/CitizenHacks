@@ -64,9 +64,9 @@ def update():
         print("filename: " + filename)
         filey.save(os.path.join(".", filename))
         fileurl = filename
-        os.system("keybase fs mv {} /keybase/private/{},{}".format(fileurl, doctor, patient))
+        os.system("keybase fs cp {} /keybase/private/{},{}".format(fileurl, doctor, patient))
         os.system("keybase chat send {},{} 'Your updated files have been added to your shared folder and you should copy them into your private folder.'".format(doctor,patient))
-        os.system("rm {}".format(filename))
+        os.system("del {}".format(filename))
         return redirect("/")        
     else:
         return render_template("update.html")
