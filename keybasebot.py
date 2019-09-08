@@ -1,7 +1,4 @@
-import re
-from flask import Flask, abort, redirect, render_template, request
-from werkzeug.exceptions import default_exceptions, HTTPException
-
+from flask import redirect, render_template, request, session
 import pykeybasebot
 import asyncio
 import functools
@@ -9,20 +6,6 @@ import logging
 import os
 import sys
 import pykeybasebot.types.chat1 as chat1
-# Web app
-app = Flask(__name__)
-
-@app.after_request
-def after_request(response):
-    """Disable caching"""
-    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    response.headers["Expires"] = 0
-    response.headers["Pragma"] = "no-cache"
-    return response
-
-@app.route("/")
-def index():
-    return render_template("index.html")
 
 logging.basicConfig(level = logging.ERROR)
 
@@ -42,6 +25,12 @@ def force_async(fn):
 
     return wrapper
 
+class Handler:
+    async def __call__(self, bot, event):
+        if event.msg.content.type_name != chat1.MessageTypeStrings.TEXT.value:
+            return
+        await docbot.sharepatientdata(event.msg.content.text.body)
+        
 class DocBot:
     def __init__(self, botname, paperkey, channels):
         self.botname = botname
@@ -98,16 +87,15 @@ docbot = DocBot(
     paperkey = "holiday maid indoor dial sword leisure limit spend connect cheese round slot hat",
     channels = ["dhrumilp15,dhrumilp15"]
 )
-
-# await docbot._bot.chat.send(...)
-def patientres(basicbot, event):
+def patientGreeting(bot, event):
     if event.msg.content.type_name != chat1.MessageTypeStrings.TEXT.value:
         return False
-    return [event.msg.sender.username, event.msg.text.body]
 
-@app.route("/medhistory", methods = ['GET', 'POST'])
-def names():
-    if request.method == 'GET':
-        return render_template("names.html")
-    else:
-        await docbot.sharepatientdata()
+def patientfiles(bot, event):
+    if event.msg.content.type_name != chat1.MessageTypeStrings.TEXT.value:
+        return False
+    patient = {'username': ''}
+    patient['username'] = event.msg.sender.username
+    return patient
+
+docbot.run()
