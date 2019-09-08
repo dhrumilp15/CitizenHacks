@@ -22,7 +22,7 @@ class Handler:
                 msg = event.msg.content.text.body
                 if msg == "!MediChain":
                     await bot.chat.send(channel, "Could you send your medical data into the chat?")
-            if event.msg.content.type_name == chat1.MessageTypeStrings.ATTACHMENT.value:
+            if event.msg.content.type_name == chat1.MessageTypeStrings.ATTACHMENT.value and 'MediChain' in event.channel.name:
                 # print("conversation: {} messageId: {} filename: {}".format(channel.name, event.msg.id, event.msg.content))
                 filename = event.msg.content.attachment.object.filename
                 os.system("keybase chat download {channel} {attachmentId} -o {filename}".format(channel = channel.name, attachmentId = int(event.msg.id), filename = filename))
@@ -30,9 +30,12 @@ class Handler:
                 os.system("del {filename}".format(filename = filename))
 
 listen_options = {
-    "filter-channels": [
-        {"name": "MediChain,dhrumilp15"}
-    ]
+    "local": True,
+    "wallet": True,
+    "dev": True,
+    "hide-exploding": False,
+    "filter_channel": None,
+    "filter_channels": None,
 }
 
 # bot = Bot(
