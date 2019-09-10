@@ -9,6 +9,7 @@ from pykeybasebot import Bot
 
 logging.basicConfig(level=logging.DEBUG)
 
+#os.environ['PAPERKEY'] = "wait much fluid ice aim void web valid course ancient detect woman silent"
 if "win32" in sys.platform:
     # Windows specific event-loop policy
     asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
@@ -38,11 +39,9 @@ listen_options = {
     "filter_channels": None,
 }
 
-# bot = Bot(
-#     username="MediChain", paperkey="holiday maid indoor dial sword leisure limit spend connect cheese round slot hat", handler=Handler()
-# )
+
 bot = Bot(
-    username="MediChain", paperkey="wait much fluid ice aim void web valid course ancient detect woman silent", handler=Handler()
+    username="MediChain", paperkey=os.environ.get('PAPERKEY'), handler=Handler()
 )
 
 asyncio.run(bot.start(listen_options))

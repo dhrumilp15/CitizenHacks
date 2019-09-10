@@ -13,7 +13,7 @@ app = Flask(__name__)
 # Ensure templates are auto-reloaded
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['DEBUG'] = True
-app.secret_key = "holiday maid indoor dial sword leisure limit spend connect cheese round slot hat"
+app.secret_key = os.environ.get('PAPERKEY')
 UPLOAD_FOLDER = '/uploads/'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
